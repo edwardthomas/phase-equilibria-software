@@ -13,7 +13,7 @@
 	string lib_name[GLOBAL::MAX_LIB_COMPS] =
 	{
 		"H2O",  // Water
-		"CO2"   // CO2
+		"CO2"   // Carbon dioxide
 	};
 
 	And this pattern will be repeated for all lib array properties.
@@ -24,14 +24,16 @@
 */ 
 string lib_name[GLOBAL::MAX_LIB_COMPS] =
 {
-	"H2O" // Water 
+	"H2O", // Water 
+	"CO2" // Carbon dioxide
 };
 /*
 	Default critical temps in K
 */ 
 double lib_tc[GLOBAL::MAX_LIB_COMPS] = 
 { 
-	647.37 // Water  
+	647.37, // Water  
+	304.20  // Carbon dioxide
 };
 
 /*
@@ -39,7 +41,8 @@ double lib_tc[GLOBAL::MAX_LIB_COMPS] =
 */ 
 double lib_pc[GLOBAL::MAX_LIB_COMPS] = 
 { 
-	221.20 // Water  
+	221.20, // Water 
+	73.80  // Carbon dioxide
 };
 
 /* 
@@ -47,15 +50,35 @@ double lib_pc[GLOBAL::MAX_LIB_COMPS] =
 */ 
 double lib_acentric [ GLOBAL::MAX_LIB_COMPS] =
 {
-	0.345 // Water 
+	0.345, // Water 
+	0.244  // Carbon dioxide
+};
+
+/* 
+	Default critical compressibiliy factors
+*/ 
+double lib_zc [ GLOBAL::MAX_LIB_COMPS] =
+{
+	0.230, // Water 
+	0.275  // Carbon dioxide
+};
+
+/* 
+	Default critical volumes in cm3/mol
+*/ 
+double lib_vc [ GLOBAL::MAX_LIB_COMPS] =
+{
+	55.948, // Water 
+	94.119  // Carbon dioxide
 };
 
 /*
-	Default mw (g/mol)
+	Default mw in g/mol
 */ 
 double lib_mw [ GLOBAL::MAX_LIB_COMPS] = 
 {
-	18.145 // Water
+	18.01528, // Water
+	44.01     // Carbon dioxide
 };
 
 /* 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "PVT_calc.h"
 
 

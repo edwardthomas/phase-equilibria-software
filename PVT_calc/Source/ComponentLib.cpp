@@ -201,18 +201,51 @@ ComponentLib::~ComponentLib(void)
 
 
 
-
+/*
+	This method initializes the data members for the 
+	component class to zero, if value is given this 
+	will be updated with user data, if no user data
+	is given in the input file the default values 
+	will be used. 
+*/ 
 void ComponentLib::initialize_datamembers(int nc)
 {
 	 // resize all vectors to the number of components
 	 // currently in the system
 	 name.resize(nc); 
-	 tc.resize(nc);
-	 pc.resize(nc); 
-	 ac.resize(nc);
-	 zc.resize(nc); 
-	 vc.resize(nc);
-	 mw.resize(nc);
+	 tc.resize(nc, 0.0);
+	 pc.resize(nc, 0.0); 
+	 ac.resize(nc, 0.0);
+	 zc.resize(nc, 0.0); 
+	 vc.resize(nc, 0.0);
+	 mw.resize(nc, 0.0);
 	
 }
 
+/*
+	This method supplies any data the user did not supply 
+	using the default library 
+*/ 
+void ComponentLib::updateDataWithDefaults()
+{	
+	int nc = GLOBAL::NC; 
+	int n_lib = GLOBAL::MAX_LIB_COMPS; 
+
+	for ( int i = 0; i < nc; i++ )// comps 
+	{
+		for ( int j = 0;  j < n_lib; j++ ) // n in library 
+		{
+			if ( name[i].compare(lib_name[j]) == 0 )// compare name
+			{
+				// if no value was given, use defaults 
+				if (tc[i] == 0.0) tc[i] = lib_tc[j];
+				if (pc[i] == 0.0) pc[i] = lib_pc[j];
+				if (zc[i] == 0.0) zc[i] = lib_zc[j];
+				if (ac[i] == 0.0) ac[i] = lib_acentric[j];
+				// using default mw for now 
+				mw[i] = lib_mw[j];
+			}
+		}
+		 
+	}
+}

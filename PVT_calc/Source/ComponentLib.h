@@ -20,6 +20,7 @@ public:
 	ComponentLib(void);
 	~ComponentLib(void);
 	void initialize_datamembers(int nc); //< size arrays properly 
+	void updateDataWithDefaults(); //< add data not supplied by user to comps
 	vector<string> name; //< vector of the names of the current components
 	vector<double> tc; //< vector of critical temperatures in K 
 	vector<double> pc; //< vector of critical pressures in bar

@@ -20,7 +20,7 @@
 */ 
 
 /* 
-   Default names 
+	Default names 
 */ 
 string lib_name[GLOBAL::MAX_LIB_COMPS] =
 {

@@ -25,7 +25,7 @@
 string lib_name[GLOBAL::MAX_LIB_COMPS] =
 {
 	"H2O", // Water 
-	"CO2" // Carbon dioxide
+	"CO2"  // Carbon dioxide
 };
 /*
 	Default critical temps in K
@@ -42,7 +42,7 @@ double lib_tc[GLOBAL::MAX_LIB_COMPS] =
 double lib_pc[GLOBAL::MAX_LIB_COMPS] = 
 { 
 	221.20, // Water 
-	73.80  // Carbon dioxide
+	73.80   // Carbon dioxide
 };
 
 /* 

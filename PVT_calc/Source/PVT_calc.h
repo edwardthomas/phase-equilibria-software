@@ -3,6 +3,10 @@
 #include "global.h"
 #include "ComponentLib.h"
 #include "utils.hpp"
+#include "EquationOfState.h"
+#include "SRK_EquationOfState.h"
+#include "PVT_Simulation.h"
+#include "LiquidDensity.h"
 #include<string>
 #include<fstream>
 #include<iostream>
@@ -29,8 +33,7 @@ private:
 	// main input file 
 	string inputFile; 
 
-	// pointer to component objects
-	ComponentLib *pComps;
+	
 	
 	// equation of state 
 	EOS_TYPE eosModel; 
@@ -56,6 +59,40 @@ private:
 	void parseSIMULATION( string f); 
 	void parseTEMP( string f);
 	void parsePRES( string f);
+
+	/*
+		pointers to objects used by PVT_calc
+	*/
+	// pointer to component objects
+	ComponentLib *pComps; //< Holds all comp data 
+	EquationOfState *pEOS; //< Equation of state object
+	PVT_Simulation *pSimulation; //< Object defining simulation
+
+	/*
+		Methods to create simulation and eos objects 
+	*/ 
+	bool makeEOSobject(); 
+	bool makeSIMobject(); 
+
+	/*
+		Method to set up offsets and resize data vector
+	*/ 
+	void setOffsets(); 
+
+	vector<double> allData;//< holds all data to pass to/from a simulation
+
+	/*
+		offsets for allData vector
+	*/
+	int nPres; //< number of pressures 
+	int nTemp; //< number of temps
+	int TEMP;  //< location of first temp in data array
+	int PRES;  //< location of first pres in data array 
+	int ZC;    //< location of first set of feed comps
+	int NU;    //< location of first set of phase fractions
+	int XCP;   //< location of first set of phase compositions
+	int DEN;   //< location of first set of density
+	int LEN;   //< total length of data vector
 
 
 };

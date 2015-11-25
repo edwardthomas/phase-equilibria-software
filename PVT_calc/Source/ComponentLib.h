@@ -1,4 +1,4 @@
-#pragma once
+
 #include<string> 
 #include<vector>
 #include "global.h"
@@ -11,6 +11,7 @@ using namespace std;
 	the pure components names and properties of all of the components in the system, thus 
 	they are all of size NC with NC = the number of components in the system. 
 */
+#pragma once
 class ComponentLib
 {
 /*
@@ -28,5 +29,9 @@ public:
 	vector<double> zc; //< vector of critical compressiblity
 	vector<double> vc; //< vector of critical molar volumes (cm^3/mol)
 	vector<double> mw; //< vector of mw (g/mol) 
+
+	// EOS parameters
+	vector<double> aPure; //< vector of pure 'a' parameters cm6bar2/mol2 
+	vector<double> bPure; //< vector of pure 'b' parameters cm3/mol
 };
 

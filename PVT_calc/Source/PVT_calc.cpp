@@ -23,8 +23,77 @@ PVT_calc::PVT_calc(string file)
 
 	//set up pure component data, must use defaults or 
 	//user defined data, or a mixture of both 
-	pComps->updateDataWithDefaults(); 
+	pComps->updateDataWithDefaults();
 
+	// Create EOS object 
+	if ( !makeEOSobject() ) 
+	{
+		cout << "Could not create EOS object" << endl; 
+		exit(0); 
+	} 
+
+	// Create Simulation object 
+	if ( !makeSIMobject() ) 
+	{
+		cout << "Could not create sim object" << endl; 
+		exit(0); 
+	} 
+
+	setOffsets();
+
+}
+
+/*
+	Once this method is called, the data has been read, the appropriate
+	objects have been created, and the simulation is ready to run. This 
+	is the main method of PVT_calc. 
+*/ 
+void PVT_calc::runPVTsim()
+{
+	//
+
+}
+
+
+/*
+	Creates indexes for the data vector to store 
+	all simulation data, temperature, pressure, density, 
+	composition, phase fraction, phase composition, etc. 
+*/
+void PVT_calc::setOffsets()
+{
+	int npres = pres.size();
+	int ntemp = temp.size();
+	int nc = GLOBAL::NC;
+	int np = GLOBAL::NP;
+	//TODO: finish this method 
+
+}
+
+
+
+
+bool PVT_calc::makeEOSobject()
+{
+	if ( eosModel == SRK)
+	{
+		pEOS = new SRK_EquationOfState();
+		if ( pEOS ) return true; 
+		return false;
+	}
+	else
+		return false; 
+}
+bool PVT_calc::makeSIMobject()
+{
+	if ( this->eosModel == LIQDENSITY)
+	{
+		pSimulation = new LiquidDensity(pComps, pEOS);
+		if ( pEOS ) return true; 
+		return false;
+	}
+	else
+		return false; 
 }
 
 bool PVT_calc::parseInputFile()
@@ -101,11 +170,7 @@ bool PVT_calc::parseInputFile()
 	return true; 
 }
 
-void PVT_calc::runPVTsim()
-{
 
-
-}
 
 PVT_calc::~PVT_calc(void)
 {
@@ -202,6 +267,8 @@ void PVT_calc::parseSIMULATION (string f)
 
 	if ( sim == "TPFLASH") 
 		simToRun = TPFLASH;
+	else if ( sim == "LIQDENSITY")
+		simToRun = LIQDENSITY; 
 	else
 	{
 		cout << "Simulation type: " << sim << " not found" << endl;

@@ -39,8 +39,13 @@ PVT_calc::PVT_calc(string file)
 		exit(0); 
 	} 
 
+	//set up data array 
 	setOffsets();
 
+	//add all data to array 
+	setUpData();	
+
+	cout << "All data read in and ready to run simulation" << endl; 
 }
 
 /*
@@ -50,10 +55,35 @@ PVT_calc::PVT_calc(string file)
 */ 
 void PVT_calc::runPVTsim()
 {
-	//
+	// run the simulation
+	pSimulation->run_simulation(allData);
 
+	// output the results
+	pSimulation->output_results(allData);
 }
 
+/*
+	Copy all input data into large data array to 
+	prepare to run a simulation
+*/ 
+void PVT_calc::setUpData()
+{
+	int nc = NC;
+
+	// copy t and p 
+	for ( int i = 0; i < temp.size(); i++ ) 
+		allData[TEMP+i] = temp[i]; 
+	for ( int i = 0; i < pres.size(); i++ ) 
+		allData[PRES+i] = pres[i];
+
+	// copy feed 
+	for ( int i = 0; i < temp.size()*pres.size(); i++ ) 
+	{
+		for (int j = 0; j < nc; j++ ) 
+			allData[ZC + j + i*nc] = zc[j+i*nc];
+	}
+
+}
 
 /*
 	Creates indexes for the data vector to store 
@@ -62,12 +92,30 @@ void PVT_calc::runPVTsim()
 */
 void PVT_calc::setOffsets()
 {
-	int npres = pres.size();
-	int ntemp = temp.size();
+	
+	nPres = pres.size();
+	nTemp = temp.size();
+	int ndata = nPres*nTemp; 
 	int nc = GLOBAL::NC;
 	int np = GLOBAL::NP;
-	//TODO: finish this method 
 
+	PRES = 0; 
+	TEMP = PRES + nPres;
+	ZC = TEMP + nTemp; 
+	NU = ZC + nc*ndata;  
+	XCP = NU+np*ndata;   
+	DEN = XCP+ nc*np*ndata; 
+	LEN = DEN + np*ndata;
+
+	allData.resize(LEN); 
+
+	// feed not entered, use default of 1/nc 
+	if ( zc.size() == 0 ) 
+	{
+		for ( int i = 0; i< ndata; i++ ) 
+			for ( int j = 0; j < nc; j++ ) 
+				zc.push_back(1./nc); 
+	}
 }
 
 
@@ -164,6 +212,10 @@ bool PVT_calc::parseInputFile()
 		else if ( file[i] == "PRES")
 		{
 			parsePRES(file[i+1]); 
+		}
+		else if ( file[i] == "FEED")
+		{
+			parseFEED(file[i+1]);
 		}
 		i++;
 	}
@@ -297,6 +349,20 @@ void PVT_calc::parsePRES( string f)
 	{
 		s >> p; 
 		pres.push_back(p);
+	}
+
+}
+
+void PVT_calc::parseFEED( string f)
+{
+	istringstream s(f);
+	double tmp; 
+
+	
+	while ( s.good() ) 
+	{
+		s >> tmp; 
+		zc.push_back(tmp);
 	}
 
 }

@@ -12,7 +12,7 @@
 #include<iostream>
 #include<sstream>
 #include<vector>
-
+using namespace GLOBAL;
 using namespace std; 
 
 
@@ -47,6 +47,7 @@ private:
 	// pressure and temperature ( bar and K ) 
 	vector<double> temp; //< vector of temps to run given simulation
 	vector<double> pres; //< vector of pres to run given simulation
+	vector<double> zc; //< vector of compositions for each data point
 
 	// methods to handle keywords
 	void parseNC_NP(string f);
@@ -59,6 +60,7 @@ private:
 	void parseSIMULATION( string f); 
 	void parseTEMP( string f);
 	void parsePRES( string f);
+	void parseFEED( string f);
 
 	/*
 		pointers to objects used by PVT_calc
@@ -78,21 +80,11 @@ private:
 		Method to set up offsets and resize data vector
 	*/ 
 	void setOffsets(); 
+	void setUpData(); 
 
 	vector<double> allData;//< holds all data to pass to/from a simulation
 
-	/*
-		offsets for allData vector
-	*/
-	int nPres; //< number of pressures 
-	int nTemp; //< number of temps
-	int TEMP;  //< location of first temp in data array
-	int PRES;  //< location of first pres in data array 
-	int ZC;    //< location of first set of feed comps
-	int NU;    //< location of first set of phase fractions
-	int XCP;   //< location of first set of phase compositions
-	int DEN;   //< location of first set of density
-	int LEN;   //< total length of data vector
+	
 
 
 };

@@ -12,5 +12,7 @@ int main(void)
 
 	PVT_calc * myPVTsim = new PVT_calc(filename); 
 
+	myPVTsim->runPVTsim();
+
 	return 0;
 }

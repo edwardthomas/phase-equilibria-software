@@ -45,7 +45,8 @@ PVT_calc::PVT_calc(string file)
 	//add all data to array 
 	setUpData();	
 
-	cout << "All data read in and ready to run simulation" << endl; 
+	cout << "All data read in and ready to run:" << endl;
+	cout << "\t" << *(pSimulation->simName) << " using " << *(pEOS->eosName) << endl; 
 }
 
 /*

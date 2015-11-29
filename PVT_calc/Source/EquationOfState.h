@@ -45,7 +45,11 @@ public:
 	
 	void solveCubicEOS(double c0, double c1, double c2, double c3, int findMinRoot, double* Zroot );
 
-	ComponentLib *pComps;
+	ComponentLib *pComps; //< holds pointer to props object
+
+	string *eosName; //< name of eos 
+
+
 
 	
 };

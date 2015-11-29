@@ -219,6 +219,8 @@ void ComponentLib::initialize_datamembers(int nc)
 	 zc.resize(nc, 0.0); 
 	 vc.resize(nc, 0.0);
 	 mw.resize(nc, 0.0);
+	 aPure.resize(nc, 0.0);
+	 bPure.resize(nc, 0.0);
 	
 }
 

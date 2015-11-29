@@ -6,10 +6,18 @@
 #include<fstream>
 using namespace std; 
 
-int main(void)
+int main(int narg, char** arg)
 {
-	string filename = "pvt.in";
-
+	string filename; 
+	if ( narg == 1 )
+	{
+		cout << "No input file provided as an argument, using default value (pvt.in)" << endl; 
+		filename = "pvt.in";
+	}
+	else
+	{
+		filename = arg[1];
+	}
 	PVT_calc * myPVTsim = new PVT_calc(filename); 
 
 	myPVTsim->runPVTsim();

@@ -3,14 +3,21 @@
 
 SRK_EquationOfState::SRK_EquationOfState(void)
 {
-	//cout << "srk set up" << endl;
+	eosName = new string("SRK Equation of State"); 
 }
 
 
 void SRK_EquationOfState::computeMixParameters(vector<double> zc, ComponentLib *pComp, double Pres, double Temp)
 {
+	/*
+		The parameters in this routine for the alpha function and for the \Omega_b and \Omega_a 
+		in the EOS are from the original 1972 Soave paper. Some other new parameters could be
+		incorporated as a new EOS. 
+	*/ 
 	int nc = GLOBAL::NC;
 	const double R = GLOBAL::R;
+
+	double tc, pc, ac; 
 
 // compute A and B for mixture, using srk equation
 	// first get a, alpha=f(T) and b for pure components
@@ -18,17 +25,27 @@ void SRK_EquationOfState::computeMixParameters(vector<double> zc, ComponentLib *
 	double am=0, bm=0, Am=0, Bm=0;
 	for ( int i = 0; i < nc; i++ ) 
 	{
-		b[i] = 0.08664*R*(pComp->tc[i]) / (pComp->pc[i]);
+		// temp variables to make calculation simpler to read
+		tc = pComp->tc[i]; // crit temp
+		pc = pComp->pc[i]; // crit pres
+		ac = pComp->ac[i]; // acentric factor
+
+		// pure component b 
+		b[i] = 0.08664*R*tc/pc;
+
 		//simple linear mixing rule for bm
 		bm += zc[i]*b[i]; 
 
-		a[i] = 0.427*R*R*(pComp->tc[i])*(pComp->tc[i]) / (pComp->tc[i]);
-		alpha[i] = (1 + ( 0.48508 + 1.55171*(pComp->ac[i])-
-			            0.15613*(pComp->ac[i])*(pComp->ac[i]))*
-						(1-sqrt(Temp/(pComp->tc[i]))));
+		// critical a
+		a[i] = 0.42747*R*R*tc*tc/pc;
+
+		// alpha function
+		alpha[i] = (1 + ( 0.480 + 1.574*ac-0.176*ac*ac)*(1-sqrt(Temp/tc)) )  ;
 		alpha[i] *= alpha[i];
 
-		pComp->aPure[i] = a[i] = alpha[i]*a[i];
+		// pure ac*alpha(T) 
+		pComp->aPure[i] = alpha[i]*a[i];
+		// pure b
 		pComp->bPure[i] = b[i]; 
 	}
 
@@ -71,7 +88,7 @@ void SRK_EquationOfState::computeDensity(vector<double> zc, ComponentLib *pComp,
 	den[phase_id] = density*AMW;
 
 
-};
+}
 
 
 void SRK_EquationOfState::computeFugacity(vector<double> zc, ComponentLib *pComp, double Pres, double Temp, int phase_id, vector<double> &fug)

@@ -4,7 +4,7 @@
 /* 
 	All arrays containing default data are below, followed 
 	by the methods of ComponentLib. The library is compiled 
-	Perry's Chemical Engineers Handbook. To add components 
+	from Perry's Chemical Engineers Handbook. To add components 
 	to this library, first increase the maximum number of 
 	library components in the global.h header. Then simply 
 	add their properties to the arrays below. 

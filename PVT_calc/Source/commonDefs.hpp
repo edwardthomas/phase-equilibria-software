@@ -1,7 +1,7 @@
 #ifndef _COMMON_DEFS_
 #define _COMMON_DEFS_
 
-enum EOS_TYPE {SRK, VDW, PR, GHC};
+enum EOS_TYPE {SRK, VDW, PR, GHC}; 
 
 enum FLASH_TYPE {SIMPLE };
 

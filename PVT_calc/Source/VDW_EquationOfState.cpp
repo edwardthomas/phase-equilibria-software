@@ -11,7 +11,7 @@ void VDW_EquationOfState::computeMixParameters(vector<double> zc, ComponentLib *
 {
 	/*
 	The van der Waals equation of state is implemented with the energy parameter and molecular covolume as 
-	as constants using standard Lorentz-Berthelot combining rules. 
+	as constants using original combining rules. 
 	*/ 
 	int nc = GLOBAL::NC;
 	const double R = GLOBAL::R;
@@ -32,11 +32,14 @@ void VDW_EquationOfState::computeMixParameters(vector<double> zc, ComponentLib *
 		// pure component b 
 		b[i] = R*tc/(8*pc);
 
-		//simple linear mixing rule for bm
+		//linear mixing rule for bm
 		bm += zc[i]*b[i]; 
 
 		// pure component a
 		a[i] = 27*R*R*tc*tc/(64*pc);
+
+		//mixing rule for am -- calculation finished outside of loop
+		am += zc[i]*sqrt( a[i] );
 
 		// pure a
 		pComp->aPure[i] = a[i];
@@ -44,11 +47,8 @@ void VDW_EquationOfState::computeMixParameters(vector<double> zc, ComponentLib *
 		pComp->bPure[i] = b[i]; 
 	}
 
-	for ( int i = 0; i < nc; i++)
-		for ( int j = 0; j < nc; j++)
-		{
-			am += zc[i]*zc[j]*sqrt( a[i]*a[j] );
-		}
+	//am*am to fnish calculation
+	am = am*am;
 
 	// Reduced Am and Bm
 	Am = am*Pres / ( R*R*Temp*Temp);
@@ -107,20 +107,16 @@ void VDW_EquationOfState::computeFugacity(vector<double> zc, ComponentLib *pComp
 
 	// temporary storage
 	double term1=0; double term2=0; 
-	vector<double> lnphi(NC);
+	vector<double> lnphi(NC), A(NC), B(NC);
 	
 	// compute mixture fugacity coefficients
 	for ( int i = 0; i <NC; i++)
 	{
-		// compute "a sum" term 
-		double sum_a = 0.0; 
-		for ( int j = 0; j < NC; j++ )
-			//sum_a +=zc[j]*sqrt(pComp->aPure[i] * pComp->aPure[j]); 
-
-		//term1 = ((pComp->bPure[i])/bm)*(Zreturn-1)-log(Zreturn-EOS_B_mix);
-		//term2 = -(EOS_A_mix/EOS_B_mix )*(2*sum_a/am -(pComp->bPure[i])/bm)*log((Zreturn+EOS_B_mix)/Zreturn); 
-
-		lnphi[i] = term1 + term2;
+		//compute dimensions Ai and Bi
+		A[i] = a[i]*Pres / (R*R*Temp*Temp);
+		B[i] = b[i]*Pres / (R*Temp);
+	
+		lnphi[i] = B[i]/(Zreturn-EOS_B_mix)-log(Zreturn*(1-EOS_B_mix/Zreturn))-2*sqrt(EOS_A_mix*A[i])/Zreturn;
 
 		// compute fugacity 
 		fug[i] = exp(lnphi[i])*zc[i]*Pres;

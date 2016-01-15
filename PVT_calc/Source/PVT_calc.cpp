@@ -130,6 +130,12 @@ bool PVT_calc::makeEOSobject()
 		if ( pEOS ) return true; 
 		return false;
 	}
+	else if ( eosModel == VDW)
+	{
+		pEos = new VDW_EquationOfState();
+		if ( pEOS ) return true;
+		return false;
+	}
 	else
 		return false; 
 }
@@ -263,6 +269,8 @@ void PVT_calc::parseEOS (string f)
 
 	if ( eos == "SRK") 
 		eosModel = SRK;
+	else if ( eos == "VDW")
+		eosModel = VDW
 	else if ( eos == "PR") 
 		eosModel = PR; 
 	else

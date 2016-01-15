@@ -5,6 +5,7 @@
 #include "utils.hpp"
 #include "EquationOfState.h"
 #include "SRK_EquationOfState.h"
+#include "VDW_EquationOfState.h"
 #include "PVT_Simulation.h"
 #include "LiquidDensity.h"
 #include<string>
@@ -55,7 +56,7 @@ private:
 	void parseEOS(string f);
 	void parseTC( string f);
 	void parsePC( string f);
-    void parseZC( string f);
+    	void parseZC( string f);
 	void parseACF( string f);
 	void parseSIMULATION( string f); 
 	void parseTEMP( string f);

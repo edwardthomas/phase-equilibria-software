@@ -270,7 +270,7 @@ void PVT_calc::parseEOS (string f)
 	if ( eos == "SRK") 
 		eosModel = SRK;
 	else if ( eos == "VDW")
-		eosModel = VDW
+		eosModel = VDW;
 	else if ( eos == "PR") 
 		eosModel = PR; 
 	else

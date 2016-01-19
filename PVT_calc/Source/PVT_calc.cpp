@@ -132,7 +132,7 @@ bool PVT_calc::makeEOSobject()
 	}
 	else if ( eosModel == VDW)
 	{
-		pEos = new VDW_EquationOfState();
+		pEOS = new VDW_EquationOfState();
 		if ( pEOS ) return true;
 		return false;
 	}
@@ -141,10 +141,10 @@ bool PVT_calc::makeEOSobject()
 }
 bool PVT_calc::makeSIMobject()
 {
-	if ( this->eosModel == LIQDENSITY)
+	if ( this->simToRun == LIQDENSITY)
 	{
 		pSimulation = new LiquidDensity(pComps, pEOS);
-		if ( pEOS ) return true; 
+		if ( pSimulation ) return true; 
 		return false;
 	}
 	else

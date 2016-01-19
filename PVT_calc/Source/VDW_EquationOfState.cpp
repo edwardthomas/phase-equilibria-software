@@ -16,7 +16,7 @@ void VDW_EquationOfState::computeMixParameters(vector<double> zc, ComponentLib *
 	int nc = GLOBAL::NC;
 	const double R = GLOBAL::R;
 
-	double tc, pc; 
+	double tc, pc, ac;
 
 // compute A and B for mixture
 	// first get a, and b for pure components
@@ -113,8 +113,8 @@ void VDW_EquationOfState::computeFugacity(vector<double> zc, ComponentLib *pComp
 	for ( int i = 0; i <NC; i++)
 	{
 		//compute dimensions Ai and Bi
-		A[i] = a[i]*Pres / (R*R*Temp*Temp);
-		B[i] = b[i]*Pres / (R*Temp);
+		A[i] = pComp->aPure[i]*Pres / (R*R*Temp*Temp);
+		B[i] = pComp->bPure[i]*Pres / (R*Temp);
 	
 		lnphi[i] = B[i]/(Zreturn-EOS_B_mix)-log(Zreturn*(1-EOS_B_mix/Zreturn))-2*sqrt(EOS_A_mix*A[i])/Zreturn;
 

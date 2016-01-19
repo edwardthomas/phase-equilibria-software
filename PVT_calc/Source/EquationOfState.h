@@ -3,6 +3,7 @@
  all of the equations of state that are available will implement 
  the required methods slightly differently. 
 */ 
+#include <cmath> 
 #include "ComponentLib.h"
 #include "global.h"
 #include <vector> 

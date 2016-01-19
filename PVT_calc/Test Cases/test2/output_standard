@@ -1,0 +1,14 @@
+All data read in and ready to run:
+	Liquid Density Calculation using VDW Equation of State
+
+ ****** Liquid Density Calculation Results ****** 
+Number of components: 1
+
+Components in system:
+	H2O
+
+  P(bar)    T(K) Feed Density(g/cm3)
+      10     250    1       0.510392
+      10     300    1       0.491361
+      15     250    1       0.510493
+      15     300    1       0.491505

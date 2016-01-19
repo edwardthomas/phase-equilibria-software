@@ -3,11 +3,11 @@
 
 ###Notes on compiling and running 
 
-The code in source has been compiled using visual C++, it assumes the input file, "pvt.in", is in the same working directory where where the executable is run. It will also compile with g++ on linux or mac using the following command: 
+The code in source has been compiled using visual C++, it assumes the input file, "pvt.in", is in the same working directory where where the executable is run. The project can be built on linux using the g++ compiler and the included makefile. Simply change to the source directory and type: 
 ```
-  g++ -std=c++11  *.cpp -o fluidity 
+  make 
 ```
-A make file will be provided in the future.  
+This requires a version of the g++ compiler and GNU make. The resulting executable "fluidity" should be run in the same directory as your input file. 
 
 ###Implementation notes
 * Adding equations of state will be straight forward, just create a class using the SRK class as template. Implement the methods in the class differently depending on the EOS, but make sure you write the methods that are defined in the base class EquationOfState. 

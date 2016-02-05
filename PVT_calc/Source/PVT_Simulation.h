@@ -28,6 +28,6 @@ public:
 
 	ComponentLib *pComps; //< Holds all comp data 
 	EquationOfState *pEOS; //< Equation of state object
-	string *simName; //< name for the simulation being run
+	string *simName; //< Name for the simulation being run
 };
 

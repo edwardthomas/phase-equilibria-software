@@ -14,14 +14,14 @@ c0*Z^3 + c1*Z^2 + c2*Z + C3 = 0
 */ 
 void EquationOfState::solveCubicEOS(double c0, double c1, double c2, double c3, int findMinRoot, double* Zroot )
 {
-	double Z_old = 1.0;// guess 
+	double Z_old = 0.5;// guess 
 	double Z_new;
 	int count = 0; 
 	//double h = 0.5;// step size
 	
 	// use Newton iteration to find a root 
 	double eps = 1.0; 
-	while ( eps > 1e-12 ) 
+	while ( eps > 1e-20 ) 
 	{
 		Z_new = Z_old - (F(c0, c1, c2, c3, Z_old)/DF(c0, c1, c2, Z_old));//*h;
 		eps = pow(abs(Z_new-Z_old),2);

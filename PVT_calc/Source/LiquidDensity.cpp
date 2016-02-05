@@ -30,7 +30,7 @@ int LiquidDensity::run_simulation(vector<double> &allData)
 			// set feed - can be different for any T,P datapoint 
 			for ( int k = 0; k<GLOBAL::NC; k++ ) 
 			{
-				feed[k] = allData[GLOBAL::ZC + j*ntemp*GLOBAL::NC + i*GLOBAL::NC + k];
+				feed[k] = allData[GLOBAL::ZC + i*ntemp*GLOBAL::NC + j*GLOBAL::NC + k];
 			}
 
 			// call eos to get density 
@@ -93,7 +93,7 @@ void LiquidDensity::output_results(vector<double> &allData)
 			// print  feed - can be different for any T,P datapoint 
 			for ( int k = 0; k<GLOBAL::NC; k++ ) 
 			{
-				cout<< setw(5) <<  allData[GLOBAL::ZC + j*ntemp*GLOBAL::NC + i*GLOBAL::NC + k];
+				cout<< setw(5) <<  allData[GLOBAL::ZC + i*ntemp*GLOBAL::NC + j*GLOBAL::NC + k];
 			}
 
 			cout << setw(15) <<  allData[ GLOBAL::DEN + i*ntemp + j] << endl;  

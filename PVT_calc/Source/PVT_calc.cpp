@@ -78,11 +78,9 @@ void PVT_calc::setUpData()
 		allData[PRES+i] = pres[i];
 
 	// copy feed 
-	for ( int i = 0; i < temp.size()*pres.size(); i++ ) 
-	{
-		for (int j = 0; j < nc; j++ ) 
-			allData[ZC + j + i*nc] = zc[j+i*nc];
-	}
+	for ( int i = 0; i < temp.size()*pres.size()*nc; i++ ) 
+		allData[ZC +  i] = zc[i];
+	
 
 }
 
@@ -108,14 +106,13 @@ void PVT_calc::setOffsets()
 	DEN = XCP+ nc*np*ndata; 
 	LEN = DEN + np*ndata;
 
+	// allocate space in data array
 	allData.resize(LEN); 
 
 	// feed not entered, use default of 1/nc 
 	if ( zc.size() == 0 ) 
 	{
-		for ( int i = 0; i< ndata; i++ ) 
-			for ( int j = 0; j < nc; j++ ) 
-				zc.push_back(1./nc); 
+		zc.assign( ndata*nc, 1.0/nc);
 	}
 }
 
@@ -144,6 +141,12 @@ bool PVT_calc::makeSIMobject()
 	if ( this->simToRun == LIQDENSITY)
 	{
 		pSimulation = new LiquidDensity(pComps, pEOS);
+		if ( pSimulation ) return true; 
+		return false;
+	}
+	else if ( this->simToRun == PUREPSAT)
+	{
+		pSimulation = new Psat_Simulation(pComps, pEOS);
 		if ( pSimulation ) return true; 
 		return false;
 	}
@@ -330,6 +333,8 @@ void PVT_calc::parseSIMULATION (string f)
 		simToRun = TPFLASH;
 	else if ( sim == "LIQDENSITY")
 		simToRun = LIQDENSITY; 
+	else if ( sim == "PSAT") 
+		simToRun = PUREPSAT;
 	else
 	{
 		cout << "Simulation type: " << sim << " not found" << endl;

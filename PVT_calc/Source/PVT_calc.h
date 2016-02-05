@@ -1,13 +1,18 @@
 #pragma once
+// Common, utilities, and components 
 #include "commonDefs.hpp"
 #include "global.h"
 #include "ComponentLib.h"
 #include "utils.hpp"
+// Equations of state
 #include "EquationOfState.h"
 #include "SRK_EquationOfState.h"
 #include "VDW_EquationOfState.h"
+// simulation types
 #include "PVT_Simulation.h"
 #include "LiquidDensity.h"
+#include "Psat_Simulation.h"
+// C++ libraries 
 #include<string>
 #include<fstream>
 #include<iostream>
@@ -56,7 +61,7 @@ private:
 	void parseEOS(string f);
 	void parseTC( string f);
 	void parsePC( string f);
-    	void parseZC( string f);
+    void parseZC( string f);
 	void parseACF( string f);
 	void parseSIMULATION( string f); 
 	void parseTEMP( string f);

@@ -1,13 +1,13 @@
 All data read in and ready to run:
-        Pure Saturation Pressure Calculation using SRK Equation of State
+	Pure Saturation Pressure Calculation using SRK Equation of State
 
- ****** Saturation Pressure Calculation Results ******
+ ****** Saturation Pressure Calculation Results ****** 
 Number of components: 1
 
 Components in system:
-        H2O
+	H2O
 
-T(K)    Feed   Sat. Pressure (bar)
+T(K)    Feed   Sat. Pressure (bar) 
   273.16       1     0.00408016
   278.16       1     0.00597354
   283.16       1     0.00861109

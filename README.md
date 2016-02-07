@@ -18,6 +18,7 @@ A decription of the input file can be found [HERE](https://github.com/edwardthom
 
 ### Simulation modes implemented
 * Liquid density calculation
+* Pure component saturation pressure 
 
 ### Equations of state
 * VDW  - classic van der Waals

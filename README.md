@@ -25,6 +25,10 @@ A decription of the input file can be found [HERE](https://github.com/edwardthom
 * SRK - Soave modification of Redlich-Kwong
  
 ###List of Contributors
+####2016 
+* Edward Thomas 
+* Heath Henley
+* Robert Kelly 
 ####2015 
 * Edward Thomas 
 * Heath Henley
